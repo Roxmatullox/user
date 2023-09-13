@@ -9,13 +9,21 @@ function albumsRes(el) {
   `
 }
 
+albumsRow.innerHTML = "Loading..."
+
+
 let query = new URLSearchParams(location.search)
 let userId1 = query.get("userId")
 
-getData("https://jsonplaceholder.typicode.com/albums" , (res)=>{
-  res.map((el)=>{
-    if (el.userId == userId1) {
-      albumsRow.innerHTML += albumsRes(el)
-    }
-  })
+getData("https://jsonplaceholder.typicode.com/albums" , (res , status)=>{
+  albumsRow.innerHTML = ""
+  if (status == 200) {
+    res.map((el)=>{
+      if (el.userId == userId1) {
+        albumsRow.innerHTML += albumsRes(el)
+      }
+    })
+  } else {
+    albumsRow.innerHTML = res
+  }
 })

@@ -10,15 +10,23 @@ function postsRes(el) {
   `
 }
 
+postsRow.innerHTML = "Loading..."
+
+
 let query = new URLSearchParams(location.search)
 
 let userId1 = query.get("userId")
 
-getData("https://jsonplaceholder.typicode.com/posts" , (res)=>{
-  res.map((el)=>{
-    if (el.userId == userId1) {
-      console.log(el);
-      postsRow.innerHTML += postsRes(el)
-    }
-  })
+getData("https://jsonplaceholder.typicode.com/posts" , (res , status)=>{
+postsRow.innerHTML = ""
+  if (status == 200) {
+    res.map((el)=>{
+      if (el.userId == userId1) {
+        console.log(el);
+        postsRow.innerHTML += postsRes(el)
+      }
+    })
+  } else {
+    postsRow.innerHTML = res
+  }
 })

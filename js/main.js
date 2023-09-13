@@ -17,11 +17,19 @@ function responseUser(user) {
 
 let postsRow = document.querySelector(".posts-row")
 
+responseRow.innerHTML = "Loading..."
 
-getData("https://jsonplaceholder.typicode.com/users" , (res)=>{
-  res.map((el)=>{
-    responseRow.innerHTML += responseUser(el)
-  })
+
+getData("https://jsonplaceholder.typicode.com/users" , (res , status)=>{
+  responseRow.innerHTML = ""
+
+  if (status == 200) {
+    res.map((el)=>{
+      responseRow.innerHTML += responseUser(el)
+    })
+  } else {
+    responseRow.innerHTML = res
+  }
 })
 
 
